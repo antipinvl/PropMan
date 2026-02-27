@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>PropMan - Главная</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Добро пожаловать в PropMan</h1>
+        <p class="subtitle">Сервис проверки надежности арендаторов и арендодателей</p>
+        <div class="buttons">
+            <a class="btn btn-large" href="{{ url_for('register') }}">Регистрация пользователя</a>
+            <a class="btn btn-large" href="{{ url_for('users') }}">Список пользователей</a>
+        </div>
+    </div>
+</body>
+</html>

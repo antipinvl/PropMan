@@ -1,0 +1,93 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    width: 90%;
+    max-width: 600px;
+    margin: 40px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    text-align: center; /* теперь весь контент по центру */
+}
+
+h1 {
+    color: #333;
+}
+
+.subtitle {
+    color: #555;
+    font-size: 1.2em;
+    margin-bottom: 30px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+form label {
+    margin-top: 10px;
+    margin-bottom: 5px;
+}
+
+form input, form select, form button {
+    padding: 10px;
+    font-size: 1em;
+    margin-bottom: 10px;
+}
+
+button, .btn {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+    text-align: center;
+    display: inline-block;
+    min-width: 200px; /* увеличенная ширина кнопок */
+    padding: 12px 20px; /* увеличенная высота и отступы */
+    font-size: 1.1em;
+}
+
+button:hover, .btn:hover {
+    background-color: #45a049;
+}
+
+.buttons {
+    display: flex;
+    justify-content: center; /* кнопки по центру */
+    gap: 20px; /* расстояние между кнопками */
+    flex-wrap: wrap;
+}
+
+.btn-large {
+    min-width: 220px;
+    padding: 15px 25px;
+    font-size: 1.2em;
+}
+
+.user-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.user-card {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 15px;
+    background-color: #f0f0f0;
+    word-wrap: break-word;
+}
+
+.user-card p {
+    margin: 5px 0;
+}

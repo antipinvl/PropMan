@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Список пользователей</title>
+    <style>
+        body { font-family: Arial, sans-serif; background-color: #f5f5f5; padding: 20px; }
+        .user-card {
+            background-color: white;
+            border: 1px solid #ccc;
+            padding: 15px;
+            margin: 10px auto;
+            width: 400px;
+            border-radius: 5px;
+            text-align: left;
+        }
+        .user-card p { margin: 5px 0; word-wrap: break-word; }
+        h1 { text-align: center; color: #2c3e50; }
+        a.button {
+            display: inline-block;
+            padding: 8px 15px;
+            margin-top: 10px;
+            background-color: #27ae60;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+        a.button:hover { background-color: #2ecc71; }
+    </style>
+</head>
+<body>
+    <h1>Список пользователей</h1>
+    <p><a href="{{ url_for('index') }}">Главная</a> | <a href="{{ url_for('register') }}">Регистрация</a></p>
+    {% for user in users %}
+        <div class="user-card">
+            <p><strong>#{{ user.id }} {{ user.name }}</strong></p>
+            <p>Email: {{ user.email }}</p>
+            <p>Роль: {{ user.role }}</p>
+            <a class="button" href="{{ url_for('profile', user_id=user.id) }}">Профиль</a>
+        </div>
+    {% endfor %}
+</body>
+</html>
