@@ -1,20 +1,19 @@
-from flask import Flask, request, redirect, url_for
-
-import os
+from flask import Flask, render_template, request, redirect, url_for
 
 app = Flask(__name__)
 
-# временное хранилище пользователей (как у тебя в проекте)
-users = []
+# Список пользователей
+users_list = [
+    {"id": 1, "name": "Юрий", "email": "yuri@mail.com", "role": "Арендатор", "reviews": []},
+    {"id": 2, "name": "Елена", "email": "elena@mail.com", "role": "Арендодатель", "reviews": []}
+]
 
+# Главная страница
 @app.route("/")
-def home():
-    return """
-    <h1>Главная страница</h1>
-    <p><a href="/register">Регистрация</a></p>
-    <p><a href="/users">Список пользователей</a></p>
-    """
+def index():
+    return render_template("index.html")
 
+# Страница регистрации пользователя
 @app.route("/register", methods=["GET", "POST"])
 def register():
     if request.method == "POST":
@@ -22,36 +21,49 @@ def register():
         email = request.form.get("email")
         role = request.form.get("role")
 
-        users.append({
-            "name": name,
-            "email": email,
-            "role": role
-        })
+        if name and email and role:
+            user_id = len(users_list) + 1
+            users_list.append({
+                "id": user_id,
+                "name": name,
+                "email": email,
+                "role": role,
+                "reviews": []
+            })
+            return redirect(url_for("users"))
 
-        return redirect(url_for("users_list"))
+    return render_template("register.html")
 
-    return """
-    <h1>Регистрация пользователя</h1>
-    <form method="POST">
-        <input name="name" placeholder="Имя"><br>
-        <input name="email" placeholder="Email"><br>
-        <input name="role" placeholder="Роль"><br>
-        <button type="submit">Зарегистрировать</button>
-    </form>
-    """
-
+# Страница списка пользователей
 @app.route("/users")
-def users_list():
-    html = "<h1>Список пользователей</h1>"
+def users():
+    return render_template("users.html", users=users_list)
 
-    for u in users:
-        html += f"<p>{u['name']} - {u['email']} - {u['role']}</p>"
+# Страница профиля пользователя
+@app.route("/profile/<int:user_id>")
+def profile(user_id):
+    user = next((u for u in users_list if u["id"] == user_id), None)
+    if user:
+        return render_template("profile.html", user=user)
+    return redirect(url_for("users"))
 
-    html += '<p><a href="/">На главную</a></p>'
-    return html
+# Добавление отзыва
+@app.route("/add_review/<int:user_id>", methods=["POST"])
+def add_review(user_id):
+    user = next((u for u in users_list if u["id"] == user_id), None)
+
+    if user:
+        reviewer = request.form.get("reviewer")
+        text = request.form.get("text")
+
+        if reviewer and text:
+            user["reviews"].append({
+                "reviewer": reviewer,
+                "text": text
+            })
+
+    return redirect(url_for("profile", user_id=user_id))
 
 
-# ❗️ ВАЖНО ДЛЯ RENDER
 if __name__ == "__main__":
-    port = int(os.environ.get("PORT", 5000))
-    app.run(host="0.0.0.0", port=port)
+    app.run(debug=True)
